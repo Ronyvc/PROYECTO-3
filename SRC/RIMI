@@ -1,0 +1,35 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_LEDBackpack.h>
+
+const int pulsoRelojPin = 2; 
+const int pulsoRelojPin2 = 4;
+
+Adafruit_7segment display = Adafruit_7segment();
+
+int contador = 0;
+
+void setup() {
+  pinMode(pulsoRelojPin, OUTPUT);
+  pinMode(pulsoRelojPin2, OUTPUT);
+  display.begin(0x70);  
+}
+
+void loop() {
+  // Generar pulso de reloj
+  digitalWrite(pulsoRelojPin, HIGH);
+  delay(100);
+  digitalWrite(pulsoRelojPin, LOW);
+  
+  digitalWrite(pulsoRelojPin2, LOW);
+  delay(100);
+  digitalWrite(pulsoRelojPin2, HIGH);
+
+  contador = (contador + 1) % 16;
+
+  
+  display.print(contador);
+  display.writeDisplay();
+
+  delay(900);  
+}
